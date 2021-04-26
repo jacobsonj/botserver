@@ -8,14 +8,14 @@ let mapState = {}
 let selectedState = {}
 let scene = {}
 let logRequestPosition = (req, res) => {
-   console.log(JSON.stringify(req.body));
+   // console.log(JSON.stringify(req.body));
    robotsPositions[req.body.name] = req.body;
    res.send('GOOD');
 };
 
 //this refers to player states
 let logRequestState = (req, res) => {
-   console.log(JSON.stringify(req.body));
+   // console.log(JSON.stringify(req.body));
    robotsStates[req.body.name] = req.body;
    res.send('GOOD');
 };
@@ -80,6 +80,10 @@ app.post("/scene", (req, res) => {
 });
 app.post("/positions/gears", (req, res) => {
    res.send(robots["Gears"]);
+});
+app.post("/positions/node", (req, res) => {
+   console.log(robotsPositions["Node"]);
+   res.send(robotsPositions["Node"]);
 });
 // app.post('*', logRequest);
 app.listen(7000);
