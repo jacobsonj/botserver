@@ -4,7 +4,7 @@ const express = require('express');
 const app = new express();
 let robotsPositions = {};
 let robotsStates = {}
-let mapState = {}
+let mapStates = []
 let selectedState = {}
 let scene = {}
 let logRequestPosition = (req, res) => {
@@ -21,9 +21,18 @@ let logRequestState = (req, res) => {
 };
 
 //this refers to item states
-let logRequestMapState = (req, res) => {
+let saveMapStates = (req, res) => {
    // console.log(JSON.stringify(req.body));
-   mapState[req.body.name] = req.body;
+   let found = false;
+   for(let i in mapStates){
+      if(mapStates[i].name == req.body.name){
+         mapStates[i] = req.body;
+         found = true;
+      }
+   }
+   if(!found){
+      mapStates.push(req.body);
+   }
    res.send('GOOD');
 };
 
@@ -61,10 +70,10 @@ app.post("/states", (req, res) => {
    res.send(robotsStates);
 });
 
-app.post("/mapstate/save", logRequestMapState);
+app.post("/mapstate/save", saveMapStates);
 app.post("/mapstates", (req, res) => {
-   console.log(mapState);
-   res.send(mapState);
+   console.log(mapStates);
+   res.send({mapStates});
 });
 
 app.post("/selectedstate/save", logRequestSelected);
