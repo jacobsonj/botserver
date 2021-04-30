@@ -22,7 +22,7 @@ let logRequestState = (req, res) => {
 
 //this refers to item states
 let saveMapStates = (req, res) => {
-   // console.log(JSON.stringify(req.body));
+   console.log(JSON.stringify(req.body));
    let found = false;
    for(let i in mapStates){
       if(mapStates[i].name == req.body.name){
@@ -45,7 +45,7 @@ let logRequestSelected = (req, res) => {
 
 //this refers to changing the scene
 let logRequestScene = (req, res) => {
-   console.log(JSON.stringify(req.body));
+   // console.log(JSON.stringify(req.body));
    scene[req.body.name] = req.body;
    res.send('GOOD');
 };
@@ -60,13 +60,13 @@ app.use(bodyParser.json());
 // app.use( logRequest);
 app.post("/position/save", logRequestPosition);
 app.post("/positions", (req, res) => {
-   console.log(robotsPositions);
+   // console.log(robotsPositions);
    res.send(robotsPositions);
 });
 
 app.post("/state/save", logRequestState);
 app.post("/states", (req, res) => {
-   console.log(robotsStates);
+   // console.log(robotsStates);
    res.send(robotsStates);
 });
 
@@ -78,20 +78,20 @@ app.post("/mapstates", (req, res) => {
 
 app.post("/selectedstate/save", logRequestSelected);
 app.post("/selectedstates", (req, res) => {
-   console.log(selectedState);
+   // console.log(selectedState);
    res.send(selectedState);
 });
 
 app.post("/scene/save", logRequestScene);
 app.post("/scene", (req, res) => {
-   console.log(scene);
+   // console.log(scene);
    res.send(scene);
 });
 app.post("/positions/gears", (req, res) => {
    res.send(robots["Gears"]);
 });
 app.post("/positions/node", (req, res) => {
-   console.log(robotsPositions["Node"]);
+   // console.log(robotsPositions["Node"]);
    res.send(robotsPositions["Node"]);
 });
 // app.post('*', logRequest);
