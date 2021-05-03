@@ -4,7 +4,8 @@ const express = require('express');
 const app = new express();
 let robotsPositions = {};
 let robotsStates = {}
-let mapStates = []
+let mapStates = [];
+let boxStates = [];
 let selectedState = {}
 let scene = {}
 let logRequestPosition = (req, res) => {
@@ -15,7 +16,7 @@ let logRequestPosition = (req, res) => {
 
 //this refers to player states
 let logRequestState = (req, res) => {
-   // console.log(JSON.stringify(req.body));
+   console.log(JSON.stringify(req.body));
    robotsStates[req.body.name] = req.body;
    res.send('GOOD');
 };
@@ -32,6 +33,21 @@ let saveMapStates = (req, res) => {
    }
    if(!found){
       mapStates.push(req.body);
+   }
+   res.send('GOOD');
+};
+
+let saveBoxesStates = (req, res) => {
+   console.log(JSON.stringify(req.body));
+   let found = false;
+   for(let i in boxStates){
+      if(boxStates[i].name == req.body.name){
+         boxStates[i] = req.body;
+         found = true;
+      }
+   }
+   if(!found){
+      boxStates.push(req.body);
    }
    res.send('GOOD');
 };
@@ -66,14 +82,19 @@ app.post("/positions", (req, res) => {
 
 app.post("/state/save", logRequestState);
 app.post("/states", (req, res) => {
-   // console.log(robotsStates);
+   console.log(robotsStates);
    res.send(robotsStates);
 });
 
 app.post("/mapstate/save", saveMapStates);
 app.post("/mapstates", (req, res) => {
-   console.log(mapStates);
+   // console.log(mapStates);
    res.send({mapStates});
+});
+app.post("/boxstate/save", saveBoxesStates);
+app.post("/boxstates", (req, res) => {
+   console.log(boxStates);
+   res.send({boxStates});
 });
 
 app.post("/selectedstate/save", logRequestSelected);
